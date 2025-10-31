@@ -45,6 +45,8 @@ def check_daily_update_num(file_prefix: str) -> int:
             prefix=file_prefix,
         )
     ):
+        if page.contents is None:
+            continue
         for o in page.contents:
             if localtime.date() == o.last_modified.date():
                 num += 1
