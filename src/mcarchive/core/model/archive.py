@@ -70,7 +70,7 @@ class WorldSaveStatus(BaseModel):
     current_sd: datetime
 
     def get_save_name(self) -> str:
-        return self.archive.server_name
+        return self.archive.server_file
 
     def gen_backup_filepath(self, file_extension: str) -> Path:
         save_name = f"{self.get_save_name()}-{self.current_sd.strftime('%Y-%m-%d_%H-%M-%S')}.{file_extension}"

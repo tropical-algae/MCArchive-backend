@@ -62,14 +62,16 @@ def get_local_save_status(db: Session, vid: str) -> WorldSaveStatus:
     if archive is None:
         raise HTTPException(**CONSTANT.ARCHIVE_NOT_EXISTED)
 
-    version = Path(settings.LOCAL_MC_VERSION_ROOT) / archive.server_name
+    version = Path(settings.LOCAL_MC_VERSION_ROOT) / archive.server_file
     world_dir: Path | None = find_subdir(parent=version, name=settings.LOCAL_MC_SAVE_NAME)
 
     if world_dir is None:
+        logger.error(f"本地{version}下不存在世界存档")
         raise HTTPException(**CONSTANT.FILE_NOT_EXISTED)
 
     world_dat: Path = world_dir / "level.dat"
     if not world_dat.exists():
+        logger.error(f"世界存档{world_dat}下不存在level.dat")
         raise HTTPException(**CONSTANT.FILE_NOT_EXISTED)
 
     return WorldSaveStatus(

@@ -49,7 +49,7 @@ def create_archive(
 def update_archive(db: Session, archive: Archives) -> Archives | None:
     result = db.get(Archives, ident=archive.id)
     if result:
-        result.server_name = archive.server_name
+        result.server_file = archive.server_file
         result.port = archive.port
         result.modpack_name = archive.modpack_name
         result.snapshot_name = archive.snapshot_name
